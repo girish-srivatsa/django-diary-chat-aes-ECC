@@ -1,0 +1,41 @@
+{% extends 'blogapp/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    {% for chatmessage in chatmessages %}
+       <article class="media content-section">
+           <div class="media-body">
+               {%  if request.user == chatmessage.mess_from %}
+                   <div class="small" align="right">
+                   <small>{{ chatmessage.time|time:'P' }}</small>
+                   </div>
+                    <div align="right" id={{ chatmessage.pk }}>
+                        {{ chatmessage.message1 }}
+                    </div>
+               {% else %}
+                   <div class="small">
+                   {{ chatmessage.mess_from }}
+                   <small>{{ chatmessage.time|time:'P' }}</small>
+                   </div>
+                    <div align="left" id={{ chatmessage.pk }}>
+                        {{ chatmessage.message1 }}
+                    </div>
+               {% endif %}
+           </div>
+       </article>
+    {% endfor %}
+{% endblock %}
+{% block form %}
+    <div id="form">
+    <form method="POST" >
+        {% csrf_token %}
+        <footer-form>
+        {{ form }}
+        </footer-form>
+        <footer-btn>
+        <button class="btn btn-outline-info" type="submit">
+            Send
+        </button>
+        </footer-btn>
+    </form>
+    </div>
+{% endblock %}
