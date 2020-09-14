@@ -21,7 +21,7 @@ class ChatP2P(models.Model):
         return "user1:"+f'{self.user1}'+" user2:"+f'{self.user2}'
 
     def get_absolute_url(self):
-        return reverse('chat-view',args=(self.creator,self.pk))
+        return reverse('chat-view',args=(self.creator,self.pk))+"#form"
 
 
 class ChatMessage(models.Model):

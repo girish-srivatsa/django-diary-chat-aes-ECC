@@ -1,6 +1,7 @@
 {% extends 'blogapp/base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
+    <div id="tot">
     {% for chatmessage in chatmessages %}
        <article class="media content-section">
            <div class="media-body">
@@ -23,9 +24,7 @@
            </div>
        </article>
     {% endfor %}
-{% endblock %}
-{% block form %}
-    <div id="form">
+    <div id="form" >
     <form method="POST" >
         {% csrf_token %}
         <footer-form>
@@ -37,5 +36,6 @@
         </button>
         </footer-btn>
     </form>
+    </div>
     </div>
 {% endblock %}

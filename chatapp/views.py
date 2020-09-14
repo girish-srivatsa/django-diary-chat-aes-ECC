@@ -147,7 +147,6 @@ def chat_message_view(request,username,pk):
         form=MessageForm(request.POST)
         if form.is_valid():
             content=form.cleaned_data.get('content')
-            form=MessageForm()
             mess_from=request.user
             enc_chat=ChatEncrypt.objects.get(user=other_user)
             aes = pyaes.AESModeOfOperationCBC(key=secret_key, iv=chatp2p.iv)
@@ -158,6 +157,7 @@ def chat_message_view(request,username,pk):
             str1+=encryptor.feed()
             content=b64encode(str1).decode()
             ChatMessage.objects.create(chat=chatp2p,mess_from=mess_from,message1=content)
+            return HttpResponseRedirect(reverse('chat-view',args=(request.user.username,pk)))
     else:
         form=MessageForm()
     context={

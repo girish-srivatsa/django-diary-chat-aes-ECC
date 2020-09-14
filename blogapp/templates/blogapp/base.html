@@ -36,6 +36,7 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                 {% if request.user.is_authenticated %}
+                    <a class="nav-item nav-link" href={% url 'chat-create' request.user.username %}>Create Chat</a>
                     <a class="nav-item nav-link" href={% url 'post-create' request.user.username %}>Create Post</a>
                     <a class="nav-item nav-link" href={% url 'profile' request.user.username %}>Profile</a>
                     <a class="nav-item nav-link" href={% url 'logout' %}>Logout</a>
