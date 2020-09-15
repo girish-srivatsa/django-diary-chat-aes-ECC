@@ -10,14 +10,13 @@
            <div class="media-body">
                <div class="article-metadata">
                {% if request.user == chat.user1 %}
-                   <a class="mr-2" href={% url 'chat-view' request.user.username chat.pk %}#form>{{ chat.user2.username }}</a>
+                   <a class="mr-2" href={% url 'chat-view' request.user.username chat.pk %}#{{ chat.last_msg_1 }}>{{ chat.user2.username }}</a>
                {% else %}
-                   <a class="mr-2" href={% url 'chat-view' request.user.username chat.pk %}#form>{{ chat.user1.username }}</a>
+                   <a class="mr-2" href={% url 'chat-view' request.user.username chat.pk %}#{{ chat.last_msg_2 }}>{{ chat.user1.username }}</a>
                {% endif %}
                <small class="text-muted">{{ chat.last_msg_time|date:'l,j/F/Y'}} {{ chat.last_msg_time|time:'P'}}</small>
                </div>
            {% if chat.last_msg_from is None %}
-           <small class="text-muted">{{ chat.last_msg }}</small>
            {% else %}
            <small class="text-muted">{{ chat.last_msg_from }} : {{ chat.last_msg }}</small>
            {% endif %}

@@ -40,7 +40,6 @@ def register(request):
                 kek_chat = hashlib.pbkdf2_hmac('sha256', force_bytes(passwd), enc_chat.salt_kek, 1000)
                 private_key = secrets.randbelow(curve.field.n)
                 public=private_key*curve.g
-                print(public.x)
                 enc_chat.public_x = str(public.x)
                 enc_chat.public_y = str(public.y)
                 cache.add('private_key', private_key, version=1)

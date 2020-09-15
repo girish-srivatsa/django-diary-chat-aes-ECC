@@ -1,7 +1,6 @@
 {% extends 'blogapp/base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
-    <div id="tot">
     {% for chatmessage in chatmessages %}
        <article class="media content-section">
            <div class="media-body">
@@ -24,12 +23,11 @@
            </div>
        </article>
     {% endfor %}
+    <script>var writing=false</script>
     <div id="form" >
-    <form method="POST" >
+    <form method="POST" id="form" onchange="change(this,writing)">
         {% csrf_token %}
-        <footer-form>
         {{ form }}
-        </footer-form>
         <footer-btn>
         <button class="btn btn-outline-info" type="submit">
             Send
@@ -37,5 +35,15 @@
         </footer-btn>
     </form>
     </div>
-    </div>
+    <script>
+    function change(form,writing){
+        writing=true
+    }
+    setInterval(function (){
+        if(writing===false)
+        {location.reload()
+        }
+        writing=false
+        },15000)
+    </script>
 {% endblock %}

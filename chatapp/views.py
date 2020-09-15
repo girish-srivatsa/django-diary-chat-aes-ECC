@@ -40,6 +40,7 @@ class ChatListView(LoginRequiredMixin,ListView):
 class ChatCreateView(LoginRequiredMixin,CreateView):
     model=ChatP2P
     fields = ['username2']
+    success_url = ""
 
     def form_valid(self, form):
         user1=self.request.user
@@ -111,7 +112,6 @@ class ChatMessageListView(FormMixin,LoginRequiredMixin,ListView):
         return queryset
 
 
-
 @login_required(login_url='login/')
 def chat_message_view(request,username,pk):
     chatp2p = ChatP2P.objects.get(pk=pk)
@@ -122,6 +122,7 @@ def chat_message_view(request,username,pk):
         other_user = chatp2p.user2
     else:
         other_user = chatp2p.user1
+    chatp2p.save()
     enc_chat_other=ChatEncrypt.objects.get(user=other_user)
     curve = registry.get_curve('secp256r1')
     other_public_key_x=int(enc_chat_other.public_x)
@@ -135,7 +136,6 @@ def chat_message_view(request,username,pk):
     sha3_key.update(x_component)
     sha3_key.update(y_component)
     secret_key = sha3_key.digest()
-    print(chats)
     for chat in chats:
         content=b64decode(chat.message1.encode())
         aes = pyaes.AESModeOfOperationCBC(key=secret_key, iv=chatp2p.iv)
@@ -152,11 +152,14 @@ def chat_message_view(request,username,pk):
             aes = pyaes.AESModeOfOperationCBC(key=secret_key, iv=chatp2p.iv)
             encryptor = pyaes.Encrypter(aes)
             content=content.encode()
-            print(content)
             str1=encryptor.feed(content)
             str1+=encryptor.feed()
             content=b64encode(str1).decode()
             ChatMessage.objects.create(chat=chatp2p,mess_from=mess_from,message1=content)
+            if chatp2p.user1 == request.user:
+                chatp2p.last_msg_1=chatp2p.last_msg
+            else:
+                chatp2p.last_msg_2=chatp2p.last_msg
             return HttpResponseRedirect(reverse('chat-view',args=(request.user.username,pk)))
     else:
         form=MessageForm()
