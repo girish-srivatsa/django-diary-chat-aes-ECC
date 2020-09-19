@@ -1,7 +1,9 @@
 {% extends 'blogapp/base.html' %}
 {% load crispy_forms_filters %}
 {% block content %}
+    <ul id="ul-my" style="list-style-type: none">
     {% for chatmessage in chatmessages %}
+        <li>
        <article class="media content-section">
            <div class="media-body">
                {%  if request.user == chatmessage.mess_from %}
@@ -22,7 +24,9 @@
                {% endif %}
            </div>
        </article>
+        </li>
     {% endfor %}
+    </ul>
     <script>var writing=false</script>
     <div id="form" >
     <form method="POST" id="form" onchange="change(this,writing)">

@@ -10,6 +10,7 @@ h1, h2, h3, h4, h5, h6 {
 
 ul {
   margin: 0;
+  list-style-type: none;
 }
 
 .bg-steel {
@@ -81,4 +82,7 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+.ul {
+  list-style: none;
 }
