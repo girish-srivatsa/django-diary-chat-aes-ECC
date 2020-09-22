@@ -1,4 +1,4 @@
-[Secure Chat]()
+[Secure Chat](/README.md)
 
 a diary cum chat app with django framework using aes-256 encryption with ECC for key generation for data protection
 
