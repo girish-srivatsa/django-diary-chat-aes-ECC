@@ -1,4 +1,5 @@
-[Your Title](django-diary-chat-aes-ECC)
+[Secure Chat](django-diary-chat-aes-ECC)
+
 a diary cum chat app with django framework using aes-256 encryption with ECC for key generation for data protection
 
 ![HEllo](/images/post.png?raw=true "post on user screen")
